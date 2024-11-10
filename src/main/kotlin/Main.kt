@@ -13,7 +13,7 @@ fun main() {
         val game = Games.valueOf(gameName)
         println("Запускаю игру: ${game.name}")
         game.startGame()
-    } catch (e: IllegalArgumentException) {
+    } catch (_: IllegalArgumentException) {
         println("Игра $sourceGameName не поддерживается!")
         return
     }
