@@ -1,25 +1,17 @@
 package org.nemial.games.prime
 
+import org.nemial.engine.runGame
 import kotlin.random.Random
 
+const val GAME_NAME = "Brain Prime"
+const val DESCRIPTION = "Напишите 'да' если число просто. Иначе напишите 'нет'"
+
 fun start() {
-    println("Добро пожаловать в игру Brain Prime")
-    println("Напишите 'да' если число просто. Иначе напишите 'нет'")
+    runGame(GAME_NAME, DESCRIPTION) {
+        val num = Random.nextInt(1, 512)
+        val answer = if (isPrime(num)) "да" else "нет"
 
-    val num = Random.nextInt(1, 512)
-    val correctAnswer = if (isPrime(num)) "да" else "нет"
-
-    println(num)
-
-    val userAnswer = readln().trim().lowercase()
-    val isCorrectAnswer = correctAnswer == userAnswer
-
-    when (isCorrectAnswer) {
-        true -> println("Вы выиграли")
-        else -> {
-            println("Вы проиграли!")
-            println("Правильный ответ: $correctAnswer")
-        }
+        Pair(num.toString(), answer)
     }
 }
 

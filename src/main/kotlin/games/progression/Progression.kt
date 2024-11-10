@@ -1,36 +1,26 @@
 package org.nemial.games.progression
 
+import org.nemial.engine.runGame
 import kotlin.random.Random
 
+const val GAME_NAME = "Brain Progression"
+const val DESCRIPTION = "Какого числа не хватает в прогрессии?"
 fun start() {
-    println("Добро пожаловать в игру Brain Progression")
-    println("Какого числа не хватает в прогрессии?")
+    runGame(GAME_NAME, DESCRIPTION) {
+        val progressionLength = 10
+        val startNum = Random.nextInt(1, 512)
+        val step = Random.nextInt(1, 5)
 
-    val progressionLength = 10
-    val startNum = Random.nextInt(1, 512)
-    val step = Random.nextInt(1, 5)
+        val progression = generateProgression(startNum, step, progressionLength)
+        val randomKey = Random.nextInt(0, progressionLength)
+        val hiddenMask = "..."
 
-    val progression = generateProgression(startNum, step, progressionLength)
-    val randomKey = Random.nextInt(0, progressionLength)
-    val hiddenMask = "..."
-
-    val hiddenValue = progression.getValue(randomKey)
-
-    println(
-        progression
+        val answer = progression.getValue(randomKey)
+        val question = progression
             .values
-            .joinToString { value -> if (value == hiddenValue) hiddenMask else value.toString() }
-    )
+            .joinToString { value -> if (value == answer) hiddenMask else value.toString() }
 
-    val userAnswer = readln().toInt()
-    val isCorrectAnswer = hiddenValue == userAnswer
-
-    when (isCorrectAnswer) {
-        true -> println("Вы выиграли")
-        else -> {
-            println("Вы проиграли")
-            println("Правильный ответ: $hiddenValue")
-        }
+        Pair(answer.toString(), question)
     }
 }
 

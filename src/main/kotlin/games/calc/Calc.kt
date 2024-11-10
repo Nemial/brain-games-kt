@@ -1,30 +1,23 @@
 package org.nemial.games.calc
 
+import org.nemial.engine.runGame
 import kotlin.random.Random
 
+const val GAME_NAME = "Brain Calc"
+const val DESCRIPTION = "Определи результат выражения"
+
 fun start() {
-    println("Добро пожаловать в игру Brain Calc")
-    println("Определи результат выражения")
+    runGame(GAME_NAME, DESCRIPTION) {
+        val operations = listOf('*', '+', '-')
+        val firstOperand = Random.nextInt(1, 512)
+        val secondOperand = Random.nextInt(1, firstOperand)
+        val operation = operations.random()
 
-    val operations = listOf('*', '+', '-')
-    val firstOperand = Random.nextInt(1, 512)
-    val secondOperand = Random.nextInt(1, firstOperand)
-    val operation = operations.random()
+        val question = "$firstOperand $operation $secondOperand"
+        val answer = getExpressionResult(firstOperand, operation, secondOperand)
 
-    println("$firstOperand $operation $secondOperand")
 
-    val userAnswer = readln().toInt()
-
-    val correctAnswer = getExpressionResult(firstOperand, operation, secondOperand)
-
-    val isCorrectAnswer = correctAnswer == userAnswer
-
-    when (isCorrectAnswer) {
-        true -> println("Вы выиграли!")
-        else -> {
-            println("Вы проиграли!")
-            println("Правильный ответ $correctAnswer")
-        }
+        Pair(answer.toString(), question)
     }
 }
 

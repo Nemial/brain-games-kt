@@ -1,26 +1,19 @@
 package org.nemial.games.gcd
 
+import org.nemial.engine.runGame
 import kotlin.random.Random
 
+const val GAME_NAME = "Brain GCD"
+const val DESCRIPTION = "Определите наибольший общий делитель для полученных чисел"
+
 fun start() {
-    println("Добро пожаловать в игру Brain GCD")
-    println("Определите наибольший общий делитель для полученных чисел")
+    runGame(GAME_NAME, DESCRIPTION) {
+        val firstNum = Random.nextInt(1, 512)
+        val secondNum = Random.nextInt(1, firstNum)
+        val answer = getGcd(firstNum, secondNum)
+        val question = "$firstNum $secondNum"
 
-    val firstNum = Random.nextInt(1, 512)
-    val secondNum = Random.nextInt(1, firstNum)
-    val correctAnswer = getGcd(firstNum, secondNum)
-
-    println("$firstNum $secondNum")
-
-    val userAnswer = readln().toInt()
-    val isCorrectAnswer = userAnswer == correctAnswer
-
-    when (isCorrectAnswer) {
-        true -> println("Вы выиграли!")
-        else -> {
-            println("Вы проиграли!")
-            println("Правильный ответ: $correctAnswer")
-        }
+        Pair(answer.toString(), question)
     }
 }
 

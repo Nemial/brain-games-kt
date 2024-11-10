@@ -1,26 +1,17 @@
 package org.nemial.games.even
 
+import org.nemial.engine.runGame
 import kotlin.random.Random
 
+const val GAME_NAME = "Brain Even"
+const val DESCRIPTION = "Определи, чётное число или нет"
+
 fun start() {
-    println("Добро пожаловать в игру Brain Even")
-    println("Определи, чётное число или нет")
+    runGame(GAME_NAME, DESCRIPTION) {
+        val randNum = Random.nextInt(0, 100)
+        val answer = if (isEven(randNum)) "да" else "нет"
 
-    val randNum = Random.nextInt(0, 100)
-    val isEven = isEven(randNum)
-
-    println(randNum)
-
-    val userAnswer = readln().trim().lowercase()
-    val answer = when (userAnswer) {
-        "да" -> true
-        else -> false
-    }
-    val isCorrectAnswer = answer == isEven
-
-    when (isCorrectAnswer) {
-        true -> println("Вы выиграли!")
-        else -> println("Вы проиграли")
+        Pair(answer, randNum.toString())
     }
 }
 
